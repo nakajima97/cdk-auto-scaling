@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
-import { CdkAutoscalingStack } from '../lib/cdk_autoscaling-stack';
+import { CdkAutoscalingStack } from '../lib/cdk-autoscaling-stack';
 
 const app = new cdk.App();
 new CdkAutoscalingStack(app, 'CdkAutoscalingStack', {
