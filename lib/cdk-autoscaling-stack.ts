@@ -17,6 +17,10 @@ export class CdkAutoscalingStack extends cdk.Stack {
     // ALBの作成
     const alb = new elb.ApplicationLoadBalancer(this, 'ALB', {
       vpc,
+      vpcSubnets: {
+        subnetType: ec2.SubnetType.PUBLIC
+      },
+      internetFacing: true
     });
 
     // セキュリティグループの作成
@@ -24,7 +28,7 @@ export class CdkAutoscalingStack extends cdk.Stack {
       vpc,
       allowAllOutbound: true
     });
-
+    // Instance Connect用のインバウンド解放
     ec2SecurityGroup.addIngressRule(
       ec2.Peer.ipv4('3.112.23.0/29'),
       ec2.Port.tcp(22),
@@ -50,10 +54,6 @@ export class CdkAutoscalingStack extends cdk.Stack {
       maxCapacity: 3,
       minCapacity: 2,
       userData,
-      associatePublicIpAddress: true,
-      vpcSubnets: {
-        subnetType: ec2.SubnetType.PUBLIC
-      }
     });
 
     // HTTPリスナーの設定
