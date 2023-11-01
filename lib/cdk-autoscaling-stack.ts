@@ -28,12 +28,6 @@ export class CdkAutoscalingStack extends cdk.Stack {
       vpc,
       allowAllOutbound: true
     });
-    // Instance Connect用のインバウンド解放
-    ec2SecurityGroup.addIngressRule(
-      ec2.Peer.ipv4('3.112.23.0/29'),
-      ec2.Port.tcp(22),
-      'Allow SSH from 3.112.23.0/29'
-    )
 
     // UserDataを使ってApacheをインストールする
     const userData = ec2.UserData.forLinux();
